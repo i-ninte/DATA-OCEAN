@@ -39,19 +39,14 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #00ffff;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
         }
 
         .logo-icon {
-            width: 30px;
-            height: 30px;
-            background: #00ffff;
-            border-radius: 4px;
+            width: 100px;
+            height: 80px;
+            background: url('logo-final.png') center/contain no-repeat;
         }
 
         .nav-links {
@@ -343,7 +338,7 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
@@ -488,6 +483,7 @@
             border-radius: 10px;
             overflow: hidden;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .project-card:hover {
@@ -587,17 +583,30 @@
             background: #0a0a0a;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            padding: 3rem 2rem;
+            padding: 2rem;
             text-align: center;
             color: #00ffff;
             font-size: 1.3rem;
             font-weight: 700;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .partner-logo:hover {
             transform: scale(1.05);
             border-color: rgba(0, 255, 255, 0.5);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+        }
+
+        .partner-logo.shield-tech img {
+            filter: brightness(0) invert(1);
         }
 
         /* Contact Section */
@@ -891,7 +900,6 @@
         <div class="nav-container">
             <div class="logo">
                 <div class="logo-icon"></div>
-                <span>DATA OCEAN</span>
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="active" onclick="navigate(event, 'home')">Home</a></li>
@@ -913,17 +921,19 @@
                 <p>We transform your data, empower your team, and drive sustainable business growth.</p>
                 <div class="hero-buttons">
                     <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Get Free Consultation</button>
-                    <button class="cta-button secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Contact</button>
+                    <button class="cta-button secondary" onclick="window.open('https://form.typeform.com/to/zF3JPf3L', '_blank')">Get Started</button>
                 </div>
             </div>
             <div class="hero-sidebar">
                 <div class="sidebar-section">
                     <h3>Services</h3>
                     <ul>
-                        <li>Data Analytics</li>
-                        <li>Data Engineering</li>
-                        <li>Data Strategy</li>
-                        <li>Machine Learning</li>
+                        <li>Data Valuation</li>
+                        <li>Building RAGs</li>
+                        <li>Data Quality</li>
+                        <li>Data Governance</li>
+                        <li>AI Governance Platform</li>
+                        <li>Offensive Security</li>
                     </ul>
                     <a href="#services" style="font-size: 0.85rem; margin-top: 0.5rem; display: inline-block;">SEE ALL ></a>
                 </div>
@@ -967,29 +977,43 @@
             <div class="service-card">
                 <div class="service-image" style="background-image: url('download.jpg');"></div>
                 <div class="service-content">
-                    <h3>Data Analytics</h3>
-                    <p>Advanced Analytics, Predictive Modeling, Business Intelligence, Data Visualization, Dashboard Development</p>
+                    <h3>Data Valuation</h3>
+                    <p>Comprehensive data asset assessment, ROI analysis, and strategic data monetization strategies to maximize your data's business value.</p>
                 </div>
             </div>
             <div class="service-card">
                 <div class="service-image" style="background-image: url('image3.jpg');"></div>
                 <div class="service-content">
-                    <h3>Data Engineering</h3>
-                    <p>ETL Pipeline Development, Data Warehousing, Cloud Migration, Big Data Solutions, Database Optimization</p>
+                    <h3>Building RAGs</h3>
+                    <p>Retrieval-Augmented Generation systems that enhance AI models with real-time data access, improving accuracy and reducing hallucinations.</p>
                 </div>
             </div>
             <div class="service-card">
                 <div class="service-image" style="background-image: url('image4.jpg');"></div>
                 <div class="service-content">
-                    <h3>Data Strategy</h3>
-                    <p>Data Governance, Strategy Roadmaps, Digital Transformation, KPI Frameworks, Data Quality Management</p>
+                    <h3>Data Quality</h3>
+                    <p>End-to-end data quality management, validation frameworks, and automated data cleansing solutions for reliable business insights.</p>
                 </div>
             </div>
             <div class="service-card">
                 <div class="service-image" style="background-image: url('image1.jpg');"></div>
                 <div class="service-content">
-                    <h3>Machine Learning</h3>
-                    <p>ML Model Development, AI Integration, NLP Solutions, Computer Vision, Recommendation Systems</p>
+                    <h3>Data Governance</h3>
+                    <p>Comprehensive governance frameworks, policy development, compliance management, and data stewardship programs.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-image" style="background-image: url('download.jpg');"></div>
+                <div class="service-content">
+                    <h3>AI Governance Platform</h3>
+                    <p>Comprehensive AI governance platform covering asset discovery, risk management, compliance enforcement, and regulatory alignment for responsible AI deployment.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-image" style="background-image: url('cyber.jpg');"></div>
+                <div class="service-content">
+                    <h3>Offensive Security</h3>
+                    <p>Advanced penetration testing, vulnerability assessments, red team exercises, and security consulting to identify and mitigate potential security threats before they become incidents.</p>
                 </div>
             </div>
         </div>
@@ -1026,43 +1050,43 @@
 
     <!-- Projects/Resources Section -->
     <section class="projects" id="projects">
-        <h2 class="section-title">Explore our Resources</h2>
+        <h2 class="section-title">Explore our Projects</h2>
         <div class="projects-grid">
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://gipsghana.com/', '_blank')">
                 <div class="project-image" style="background-image: url('img6.jpg');">
                     <div class="project-tags-top">
-                        <span class="tag-new">New Post</span>
-                        <span class="tag-category">Research</span>
+                        <span class="tag-new">Live Project</span>
+                        <span class="tag-category">Web Development</span>
                     </div>
                 </div>
                 <div class="project-content">
-                    <p class="project-time">3 Days Ago</p>
-                    <h3>Analyzing the ROI of Data Analytics Implementation in Mid-Sized Enterprises</h3>
-                    <p>(Description or summary goes here)</p>
+                    <p class="project-time">2024</p>
+                    <h3>Ghana Institute of Procurement and Supply (GIPS)</h3>
+                    <p>Professional body website for procurement and supply chain management professionals in Ghana, featuring membership management, training programs, and certification services.</p>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://app.bizbox.gea.gov.gh/', '_blank')">
                 <div class="project-image" style="background-image: url('img5.jpg');">
                     <div class="project-tags-top">
-                        <span class="tag-category">Research</span>
+                        <span class="tag-category">Government Platform</span>
                     </div>
                 </div>
                 <div class="project-content">
-                    <p class="project-time">2 Days Ago</p>
-                    <h3>Building Scalable Data Pipelines</h3>
-                    <p>(Second card description)</p>
+                    <p class="project-time">2024</p>
+                    <h3>BizBox - Business In A Box</h3>
+                    <p>Partnership platform between Mastercard Foundation and Ghana Enterprises Agency, creating dignified jobs for 250,000 Ghanaian youth through entrepreneurship programs.</p>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://app.happy.gea.gov.gh/', '_blank')">
                 <div class="project-image" style="background-image: url('image2.jpg');">
                     <div class="project-tags-top">
-                        <span class="tag-new">New Post</span>
+                        <span class="tag-new">Agricultural Initiative</span>
                     </div>
                 </div>
                 <div class="project-content">
-                    <p class="project-time">1 Day Ago</p>
-                    <h3>Hello World!</h3>
-                    <p>(Third card description)</p>
+                    <p class="project-time">2023-2027</p>
+                    <h3>HAPPY Initiative</h3>
+                    <p>Transformative agricultural program aimed at reducing Ghana's food imports by USD 2 Billion while creating opportunities for youth, women, and PWDs in agricultural value chains.</p>
                 </div>
             </div>
         </div>
@@ -1076,12 +1100,18 @@
         <h2 class="section-title">Our Partners</h2>
         <p class="section-subtitle">Collaborating with industry leaders</p>
         <div class="partners-grid">
-            <div class="partner-logo">AWS</div>
-            <div class="partner-logo">Google Cloud</div>
-            <div class="partner-logo">Microsoft Azure</div>
-            <div class="partner-logo">Snowflake</div>
-            <div class="partner-logo">Databricks</div>
-            <div class="partner-logo">Tableau</div>
+            <div class="partner-logo">
+                <img src="mastercardlogofinal.jpeg" alt="Mastercard Foundation" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div class="partner-logo">
+                <img src="gealogo.png" alt="Ghana Enterprises Agency" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div class="partner-logo">
+                <img src="gips-logo.png" alt="Ghana Institute of Procurement and Supply" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div class="partner-logo shield-tech">
+                <img src="shield-tech.svg" alt="Shield Tech Hub" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
         </div>
     </section>
 
