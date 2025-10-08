@@ -113,7 +113,7 @@
         /* Hero Section with Digital Background */
         .hero {
             min-height: 100vh;
-            background: url('home2.jpg') center/cover no-repeat;
+            background: url('home22.jpg') center/cover no-repeat;
             display: flex;
             align-items: center;
             padding: 8rem 5% 4rem;
@@ -511,6 +511,14 @@
             bottom: 0;
             background: 
                 repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.02) 10px, rgba(255, 255, 255, 0.02) 20px);
+            z-index: 1;
+        }
+
+        .project-image iframe {
+            border: none;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .project-tags-top {
@@ -1152,38 +1160,28 @@
         <h2 class="section-title">Explore our Projects</h2>
         <div class="projects-grid">
             <div class="project-card" onclick="window.open('https://gipsghana.com/', '_blank')">
-                <div class="project-image" style="background-image: url('img6.jpg');">
-                    <div class="project-tags-top">
-                        <span class="tag-new">Live Project</span>
-                        <span class="tag-category">Web Development</span>
-                    </div>
+                <div class="project-image">
+                    <iframe src="https://gipsghana.com/" frameborder="0" style="width: 100%; height: 100%;"></iframe>
                 </div>
                 <div class="project-content">
-                    <p class="project-time">2024</p>
                     <h3>Ghana Institute of Procurement and Supply (GIPS)</h3>
                     <p>Professional body website for procurement and supply chain management professionals in Ghana, featuring membership management, training programs, and certification services.</p>
                 </div>
             </div>
             <div class="project-card" onclick="window.open('https://app.bizbox.gea.gov.gh/', '_blank')">
-                <div class="project-image" style="background-image: url('img5.jpg');">
-                    <div class="project-tags-top">
-                        <span class="tag-category">Government Platform</span>
-                    </div>
+                <div class="project-image">
+                    <iframe src="https://app.bizbox.gea.gov.gh/" frameborder="0" style="width: 100%; height: 100%;"></iframe>
                 </div>
                 <div class="project-content">
-                    <p class="project-time">2024</p>
                     <h3>BizBox - Business In A Box</h3>
                     <p>Partnership platform between Mastercard Foundation and Ghana Enterprises Agency, creating dignified jobs for 250,000 Ghanaian youth through entrepreneurship programs.</p>
                 </div>
             </div>
             <div class="project-card" onclick="window.open('https://app.happy.gea.gov.gh/', '_blank')">
-                <div class="project-image" style="background-image: url('image2.jpg');">
-                    <div class="project-tags-top">
-                        <span class="tag-new">Agricultural Initiative</span>
-                    </div>
+                <div class="project-image">
+                    <iframe src="https://app.happy.gea.gov.gh/" frameborder="0" style="width: 100%; height: 100%;"></iframe>
                 </div>
                 <div class="project-content">
-                    <p class="project-time">2023-2027</p>
                     <h3>HAPPY Initiative</h3>
                     <p>Transformative agricultural program aimed at reducing Ghana's food imports by USD 2 Billion while creating opportunities for youth, women, and PWDs in agricultural value chains.</p>
                 </div>
@@ -1210,6 +1208,9 @@
             </div>
             <div class="partner-logo shield-tech">
                 <img src="shield-tech.svg" alt="Shield Tech Hub" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div class="partner-logo">
+                <img src="https://ollasystems.com/wp-content/uploads/2023/09/Logo-colour-1.png" alt="Olla Systems" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
         </div>
     </section>
@@ -1304,18 +1305,6 @@
                     </div>
                 </div>
             </div>
-            <div class="overlay-body" id="overlayQuiz" style="display:none;">
-                <div class="overlay-title" style="font-size:1.2rem; margin-bottom:0.5rem;">Data Monetization Readiness</div>
-                <div id="quizContainer" class="quiz-container"></div>
-                <div class="quiz-nav">
-                    <button class="quiz-btn secondary" onclick="prevQuiz()">Previous</button>
-                    <div style="display:flex; gap:0.5rem;">
-                        <button class="quiz-btn secondary" onclick="backToOptions()">Back to options</button>
-                        <button class="quiz-btn" id="nextBtn" onclick="nextQuiz()">Next</button>
-                    </div>
-                </div>
-                <div id="quizResult" class="quiz-result"></div>
-            </div>
         </div>
     </div>
 
@@ -1394,115 +1383,15 @@
                 return;
             }
             if (key === 'data_monetization') {
-                startQuiz();
+                window.open('https://form.typeform.com/to/UIQ6eY7t', '_blank');
+                closeGetStartedOverlay();
+                return;
             }
-        }
-
-        // Quiz logic
-        const quizQuestions = [
-            { q: 'What is your primary goal for monetizing data?', o: ['Create new revenue stream', 'Reduce costs via insights', 'Enhance partner offerings', 'Unsure/Exploring'] },
-            { q: 'Where does most of your high-value data live today?', o: ['Data warehouse/lake', 'Operational systems (ERP/CRM)', 'Vendor platforms/SaaS', 'Spreadsheets/Local systems'] },
-            { q: 'How would you rate your data quality and governance?', o: ['Formal policies and monitoring', 'Some standards, inconsistent enforcement', 'Ad-hoc with pockets of quality', 'No formal approach'] },
-            { q: 'What level of consent and compliance coverage do you have?', o: ['Comprehensive and audited', 'Partial coverage in key areas', 'Minimal documentation', 'Not started'] },
-            { q: 'Which monetization model are you exploring?', o: ['Direct data products/licensing', 'Insights/analytics as a service', 'APIs/embedded data in apps', 'Advertising/attribution', 'Not sure yet'] },
-            { q: 'What technical capabilities exist for packaging and delivering data?', o: ['APIs, catalogs, SLAs in place', 'Some APIs/feeds available', 'Manual extracts on request', 'None today'] },
-            { q: 'Do you have defined pricing, packaging, and go-to-market for data?', o: ['Yes, documented and tested', 'Draft concepts in progress', 'Ideas but no plan', 'No'] },
-            { q: 'What is your email?', type: 'email', id: 'email' },
-            { q: 'What is your company name?', type: 'text', id: 'company' }
-        ];
-
-        let quizIndex = 0;
-        const quizAnswers = new Array(quizQuestions.length).fill(null);
-
-        function startQuiz() {
-            document.getElementById('overlayChooser').style.display = 'none';
-            document.getElementById('overlayQuiz').style.display = 'block';
-            quizIndex = 0;
-            renderQuiz();
         }
 
         function backToOptions() {
             document.getElementById('overlayQuiz').style.display = 'none';
             document.getElementById('overlayChooser').style.display = 'block';
-            document.getElementById('quizResult').textContent = '';
-        }
-
-        function renderQuiz() {
-            const container = document.getElementById('quizContainer');
-            const qObj = quizQuestions[quizIndex];
-            const selected = quizAnswers[quizIndex];
-            const total = quizQuestions.length;
-            const step = `Question ${quizIndex + 1} of ${total}`;
-
-            let bodyHtml = '';
-            if (qObj.o && Array.isArray(qObj.o)) {
-                bodyHtml = `
-                    <div class=\"quiz-options\">${qObj.o.map((opt, i) => `
-                        <label>
-                            <input type=\"radio\" name=\"q${quizIndex}\" value=\"${i}\" ${selected === i ? 'checked' : ''} onchange=\"quizAnswers[${quizIndex}] = ${i}\">\n                            <span>${opt}</span>
-                        </label>
-                    `).join('')}</div>`;
-            } else if (qObj.type === 'email' || qObj.type === 'text') {
-                const val = selected || '';
-                const inputType = qObj.type === 'email' ? 'email' : 'text';
-                bodyHtml = `
-                    <div class=\"quiz-options\">
-                        <label style=\"width:100%\">
-                            <input type=\"${inputType}\" value=\"${val}\" placeholder=\"Enter ${qObj.type === 'email' ? 'email' : 'company name'}\" style=\"width:100%; padding:1rem; background: rgba(20,20,20,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:6px; color:#fff;\" oninput=\"quizAnswers[${quizIndex}] = this.value\">
-                        </label>
-                    </div>`;
-            }
-
-            container.innerHTML = `
-                <div class=\"quiz-question\">
-                    <h4>${step}: ${qObj.q}</h4>
-                    ${bodyHtml}
-                </div>
-            `;
-            const nextBtn = document.getElementById('nextBtn');
-            nextBtn.textContent = quizIndex === total - 1 ? 'Submit' : 'Next';
-        }
-
-        function validateCurrent() {
-            const qObj = quizQuestions[quizIndex];
-            const ans = quizAnswers[quizIndex];
-            if (qObj.type === 'email') {
-                const ok = typeof ans === 'string' && /.+@.+\..+/.test(ans.trim());
-                if (!ok) { alert('Please enter a valid email.'); return false; }
-            } else if (qObj.type === 'text') {
-                const ok = typeof ans === 'string' && ans.trim().length > 1;
-                if (!ok) { alert('Please enter your company name.'); return false; }
-            } else if (qObj.o && Array.isArray(qObj.o)) {
-                if (ans === null) { alert('Please select an option to continue.'); return false; }
-            }
-            return true;
-        }
-
-        function nextQuiz() {
-            if (!validateCurrent()) return;
-            if (quizIndex === quizQuestions.length - 1) { submitQuiz(); return; }
-            quizIndex = Math.min(quizIndex + 1, quizQuestions.length - 1);
-            renderQuiz();
-        }
-
-        function prevQuiz() {
-            quizIndex = Math.max(0, quizIndex - 1);
-            renderQuiz();
-        }
-
-        function submitQuiz() {
-            if (!validateCurrent()) return;
-            const answered = quizAnswers.filter(a => a !== null && a !== '').length;
-            const emailIndex = quizQuestions.findIndex(q => q.id === 'email');
-            const companyIndex = quizQuestions.findIndex(q => q.id === 'company');
-            const email = emailIndex >= 0 ? (quizAnswers[emailIndex] || '') : '';
-            const company = companyIndex >= 0 ? (quizAnswers[companyIndex] || '') : '';
-            const result = `You answered ${answered}/${quizQuestions.length} questions. Email: ${email || 'N/A'} | Company: ${company || 'N/A'}.`;
-            document.getElementById('quizResult').innerHTML = result + ' ' +
-                '<div style="margin-top:0.5rem; display:flex; gap:0.5rem;">' +
-                '<a class="quiz-btn" style="text-decoration:none;" href="https://form.typeform.com/to/knvNfDg0" target="_blank" rel="noopener">Proceed with Data Valuation</a>' +
-                '<button class="quiz-btn secondary" onclick="closeGetStartedOverlay()">Finish</button>' +
-                '</div>';
         }
 
         // Smooth scroll for all anchor links
