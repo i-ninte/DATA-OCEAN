@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Meeting Form</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #0f0; }
+        input, button { margin: 10px 0; padding: 8px; display: block; width: 300px; }
+        #output { white-space: pre-wrap; background: #000; padding: 20px; margin-top: 20px; }
+        .error { color: #f00; }
+        .success { color: #0f0; }
+    </style>
+</head>
+<body>
+    <h1>Debug Meeting Request</h1>
+    <input type="datetime-local" id="datetime" />
+    <button onclick="testRequest()">Send Request</button>
+    <div id="output"></div>
+
+    <script>
+        // Set default time
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(14, 0, 0, 0);
+        const year = tomorrow.getFullYear();
+        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+        const day = String(tomorrow.getDate()).padStart(2, '0');
+        document.getElementById('datetime').value = `${year}-${month}-${day}T14:00`;
+
+        async function testRequest() {
+            const output = document.getElementById('output');
+            output.innerHTML = 'Testing...\n\n';
+
+            const dateTimeValue = document.getElementById('datetime').value;
+            output.innerHTML += `Input value: "${dateTimeValue}"\n`;
+
+            const meetingDate = new Date(dateTimeValue);
+            output.innerHTML += `Date object: ${meetingDate}\n`;
+            output.innerHTML += `ISO String: ${meetingDate.toISOString()}\n`;
+            output.innerHTML += `Valid: ${!isNaN(meetingDate.getTime())}\n\n`;
+
+            const payload = {
+                name: "Debug Test User",
+                email: "debug@example.com",
+                phone: "+233123456789",
+                company: "Debug Corp",
+                meeting_datetime: meetingDate.toISOString(),
+                message: "Debug test"
+            };
+
+            output.innerHTML += 'Payload:\n' + JSON.stringify(payload, null, 2) + '\n\n';
+
+            try {
+                const response = await fetch('http://localhost:8000/api/meetings/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                output.innerHTML += `Status: ${response.status} ${response.statusText}\n\n`;
+
+                const result = await response.json();
+                output.innerHTML += 'Response:\n' + JSON.stringify(result, null, 2) + '\n';
+
+                if (response.ok) {
+                    output.innerHTML += '\n<span class="success">✓ SUCCESS</span>';
+                } else {
+                    output.innerHTML += '\n<span class="error">✗ ERROR</span>';
+                }
+            } catch (error) {
+                output.innerHTML += `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

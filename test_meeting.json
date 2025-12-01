@@ -1,0 +1,8 @@
+{
+  "name": "Kwabena Test User",
+  "email": "kwabena@phrontlyne.xyz",
+  "phone": "+1234567890",
+  "company": "Phrontlyne",
+  "meeting_datetime": "2025-11-06T10:00:00",
+  "message": "Second test meeting to verify Google Meet link in email notifications"
+}

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire - Data Ocean</title>
+    <link rel="icon" type="image/png" href="logo-final-removebg-preview.png" id="favicon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #001a33;
+            --bg-secondary: #002147;
+            --bg-tertiary: rgba(0, 51, 102, 0.8);
+            --text-primary: #ffffff;
+            --text-secondary: #a0b4c8;
+            --accent-color: #1e90ff;
+            --accent-hover: #4169e1;
+            --border-color: rgba(30, 144, 255, 0.2);
+            --border-hover: rgba(30, 144, 255, 0.6);
+            --overlay-bg: rgba(0, 26, 51, 0.95);
+            --nav-border: rgba(30, 144, 255, 0.2);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f0f8ff;
+            --bg-secondary: #e6f2ff;
+            --bg-tertiary: rgba(255, 255, 255, 0.9);
+            --text-primary: #001a33;
+            --text-secondary: #4a5568;
+            --accent-color: #1e90ff;
+            --accent-hover: #4169e1;
+            --border-color: rgba(30, 144, 255, 0.2);
+            --border-hover: rgba(30, 144, 255, 0.6);
+            --overlay-bg: rgba(240, 248, 255, 0.95);
+            --nav-border: rgba(30, 144, 255, 0.2);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--overlay-bg);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--nav-border);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            height: 50px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 8px rgba(30, 144, 255, 0.3));
+        }
+
+        .back-btn {
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-primary);
+            border-color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 5% 80px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .progress-track {
+            background: var(--bg-primary);
+            border-radius: 5px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--accent-color);
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .question-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .question-card h3 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .required {
+            color: #ff6b6b;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .radio-option {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .radio-option:hover {
+            border-color: var(--accent-color);
+            background: var(--bg-tertiary);
+        }
+
+        .radio-option.selected {
+            border-color: var(--accent-color);
+            background: rgba(30, 144, 255, 0.1);
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .scale-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .scale-option {
+            flex: 1;
+            min-width: 60px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .scale-option:hover {
+            border-color: var(--accent-color);
+            background: var(--bg-tertiary);
+        }
+
+        .scale-option.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: var(--bg-primary);
+        }
+
+        .scale-option input[type="radio"] {
+            display: none;
+        }
+
+        .scale-option label {
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: block;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .success-message h2 {
+            color: var(--accent-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .error-message {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .question-card {
+                padding: 1.5rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .scale-group {
+                justify-content: center;
+            }
+
+            .scale-option {
+                min-width: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo-final-removebg-preview.png" alt="Data Ocean Logo" class="logo-icon">
+            </div>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="header">
+            <h1 id="pageTitle">Loading...</h1>
+            <p id="pageDescription">Please wait while we load your questionnaire.</p>
+        </div>
+
+        <div id="loadingState" class="loading">
+            <p>Loading questions...</p>
+        </div>
+
+        <div id="errorState" style="display: none;">
+            <div class="error-message" id="errorMessage"></div>
+            <a href="index.html" class="btn btn-primary">Return to Home</a>
+        </div>
+
+        <div id="questionnaireState" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-info">
+                    <span id="progressText">Question 1 of 10</span>
+                    <span id="progressPercent">10%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+                </div>
+            </div>
+
+            <div class="question-card" id="questionCard">
+                <!-- Question content will be inserted here -->
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">
+                    ← Previous
+                </button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">
+                    Next →
+                </button>
+            </div>
+        </div>
+
+        <div id="successState" style="display: none;">
+            <div class="success-message">
+                <h2>✓ Thank You!</h2>
+                <p id="successMessage">Your responses have been submitted successfully. We'll be in touch with you soon.</p>
+                <a href="index.html" class="btn btn-primary">Return to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+
+        let serviceType = '';
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+
+        const serviceInfo = {
+            'ai_readiness': {
+                title: 'AI Readiness Assessment',
+                description: 'Assess your people, processes, and data for AI adoption.'
+            },
+            'data_valuation': {
+                title: 'Data Valuation Assessment',
+                description: 'Measure ROI and identify monetizable data assets.'
+            },
+            'data_monetization': {
+                title: 'Data Monetization Assessment',
+                description: 'Explore your data monetization readiness and opportunities.'
+            }
+        };
+
+        // Get service type from URL parameter
+        function getServiceType() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('service');
+        }
+
+        // Load questions from API
+        async function loadQuestions() {
+            serviceType = getServiceType();
+
+            if (!serviceType || !serviceInfo[serviceType]) {
+                showError('Invalid service type. Please return to the home page and try again.');
+                return;
+            }
+
+            // Update page title and description
+            document.getElementById('pageTitle').textContent = serviceInfo[serviceType].title;
+            document.getElementById('pageDescription').textContent = serviceInfo[serviceType].description;
+            document.title = `${serviceInfo[serviceType].title} - Data Ocean`;
+
+            try {
+                const response = await fetch(`${API_BASE}/questions/${serviceType}`);
+
+                if (!response.ok) {
+                    throw new Error('Failed to load questions');
+                }
+
+                questions = await response.json();
+
+                if (questions.length === 0) {
+                    showError('No questions available for this service. Please contact us directly.');
+                    return;
+                }
+
+                // Initialize answers array
+                userAnswers = new Array(questions.length).fill('');
+
+                // Show questionnaire
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('questionnaireState').style.display = 'block';
+
+                // Display first question
+                displayQuestion();
+
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                showError('Unable to load questions. Please try again later or contact us directly.');
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorState').style.display = 'block';
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            const questionCard = document.getElementById('questionCard');
+
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressText').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+
+            // Build question HTML
+            let inputHTML = '';
+            const questionId = `question-${question.id}`;
+
+            switch (question.question_type) {
+                case 'text':
+                case 'email':
+                case 'phone':
+                    const inputType = question.question_type === 'email' ? 'email' :
+                                     question.question_type === 'phone' ? 'tel' : 'text';
+                    inputHTML = `
+                        <input
+                            type="${inputType}"
+                            class="form-input"
+                            id="${questionId}"
+                            placeholder="Enter your ${question.question_type}"
+                            ${question.is_required ? 'required' : ''}
+                            value="${userAnswers[currentQuestionIndex] || ''}"
+                        />
+                    `;
+                    break;
+
+                case 'multiple_choice':
+                    const options = JSON.parse(question.options || '[]');
+                    inputHTML = '<div class="radio-group">';
+                    options.forEach((option, index) => {
+                        const optionId = `${questionId}-${index}`;
+                        const isSelected = userAnswers[currentQuestionIndex] === option;
+                        inputHTML += `
+                            <div class="radio-option ${isSelected ? 'selected' : ''}" onclick="selectRadio('${option}', this)">
+                                <input
+                                    type="radio"
+                                    name="${questionId}"
+                                    id="${optionId}"
+                                    value="${option}"
+                                    ${isSelected ? 'checked' : ''}
+                                    ${question.is_required ? 'required' : ''}
+                                />
+                                <label for="${optionId}">${option}</label>
+                            </div>
+                        `;
+                    });
+                    inputHTML += '</div>';
+                    break;
+
+                case 'scale':
+                    const scaleOptions = JSON.parse(question.options || '["1","2","3","4","5"]');
+                    inputHTML = '<div class="scale-group">';
+                    scaleOptions.forEach(value => {
+                        const optionId = `${questionId}-${value}`;
+                        const isSelected = userAnswers[currentQuestionIndex] === value;
+                        inputHTML += `
+                            <div class="scale-option ${isSelected ? 'selected' : ''}" onclick="selectScale('${value}', this)">
+                                <input
+                                    type="radio"
+                                    name="${questionId}"
+                                    id="${optionId}"
+                                    value="${value}"
+                                    ${isSelected ? 'checked' : ''}
+                                    ${question.is_required ? 'required' : ''}
+                                />
+                                <label for="${optionId}">${value}</label>
+                            </div>
+                        `;
+                    });
+                    inputHTML += '</div>';
+                    break;
+            }
+
+            questionCard.innerHTML = `
+                <h3>${question.question_text}${question.is_required ? ' <span class="required">*</span>' : ''}</h3>
+                ${inputHTML}
+            `;
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = currentQuestionIndex > 0 ? 'block' : 'none';
+            document.getElementById('nextBtn').textContent = currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next →';
+        }
+
+        function selectRadio(value, element) {
+            // Remove selected class from all options
+            element.parentElement.querySelectorAll('.radio-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            element.classList.add('selected');
+
+            // Check the radio button
+            element.querySelector('input[type="radio"]').checked = true;
+        }
+
+        function selectScale(value, element) {
+            // Remove selected class from all options
+            element.parentElement.querySelectorAll('.scale-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            element.classList.add('selected');
+
+            // Check the radio button
+            element.querySelector('input[type="radio"]').checked = true;
+        }
+
+        function nextQuestion() {
+            const question = questions[currentQuestionIndex];
+            let answer = '';
+
+            // Get answer based on question type
+            if (question.question_type === 'text' || question.question_type === 'email' || question.question_type === 'phone') {
+                const input = document.getElementById(`question-${question.id}`);
+                answer = input.value.trim();
+            } else {
+                const selected = document.querySelector(`input[name="question-${question.id}"]:checked`);
+                answer = selected ? selected.value : '';
+            }
+
+            // Validate required questions
+            if (question.is_required && !answer) {
+                alert('Please answer this question before continuing.');
+                return;
+            }
+
+            // Save answer
+            userAnswers[currentQuestionIndex] = answer;
+
+            // Move to next question or submit
+            if (currentQuestionIndex === questions.length - 1) {
+                submitAnswers();
+            } else {
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        async function submitAnswers() {
+            // Get user info from first two answers (assuming they are name and email)
+            const nameAnswer = userAnswers[0] || '';
+            const emailAnswer = userAnswers[1] || '';
+            const nameParts = nameAnswer.split(' ');
+
+            const submission = {
+                user: {
+                    email: emailAnswer,
+                    first_name: nameParts[0] || '',
+                    last_name: nameParts.slice(1).join(' ') || ''
+                },
+                service_type: serviceType,
+                answers: questions.map((q, index) => ({
+                    question_id: q.id,
+                    answer_text: userAnswers[index] || ''
+                }))
+            };
+
+            try {
+                // Disable submit button
+                const nextBtn = document.getElementById('nextBtn');
+                nextBtn.disabled = true;
+                nextBtn.textContent = 'Submitting...';
+
+                const response = await fetch(`${API_BASE}/submissions/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(submission)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById('questionnaireState').style.display = 'none';
+                    document.getElementById('successMessage').textContent = result.message || 'Your responses have been submitted successfully. We\'ll be in touch with you soon.';
+                    document.getElementById('successState').style.display = 'block';
+                } else {
+                    alert('There was an error submitting your responses. Please try again.');
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = 'Submit';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting your responses. Please try again.');
+                nextBtn.disabled = false;
+                nextBtn.textContent = 'Submit';
+            }
+        }
+
+        // Load questions when page loads
+        document.addEventListener('DOMContentLoaded', loadQuestions);
+    </script>
+</body>
+</html>
