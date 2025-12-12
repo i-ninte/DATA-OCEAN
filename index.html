@@ -1395,6 +1395,7 @@
                 <div class="contact-info-box">
                     <div class="contact-info-label">Text Us Email</div>
                     <div class="contact-info-value">info@tdoh.io</div>
+                    <div class = "contact-info"> support@tdoh.io</div>
                 </div>
                 <div class="contact-info-box">
                     <div class="contact-info-label">Call Us</div>
@@ -1493,11 +1494,12 @@
                     <h3>Contact & Support</h3>
                     <a href="mailto:info@tdoh.io">info@tdoh.io</a>
                     <a href="mailto:max@tdoh.io">max@tdoh.io</a>
+                    <a href=" mailto:support@tdoh.io"> support@tdoh.io</a>
                     <a href="tel:+233202828663">+233 2028286636</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Data Ocean Limited. All rights reserved.</p>
+                <p>&copy; 2025 DataOcean Limited. All rights reserved.</p>
                 <p style="margin-top: 0.5rem;">
                     Powered by <a href="https://i-ninte.github.io/portfolio/" target="_blank" rel="noopener noreferrer">NinteLabs</a>
                 </p>
@@ -1660,7 +1662,7 @@
             };
 
             try {
-                const response = await fetch('http://localhost:8000/api/contacts/', {
+                const response = await fetch('http://api.tdoh.io/api/contacts/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1861,7 +1863,7 @@
             };
 
             try {
-                const response = await fetch('http://localhost:8000/api/submissions/', {
+                const response = await fetch('http://api.tdoh.io/api/submissions/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1944,7 +1946,7 @@
             };
 
             try {
-                const response = await fetch('http://localhost:8000/api/meetings/', {
+                const response = await fetch('http://api.tdoh.io/api/meetings/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
