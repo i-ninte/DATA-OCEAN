@@ -721,13 +721,15 @@
                     document.getElementById('successMessage').textContent = result.message || 'Your responses have been submitted successfully. We\'ll be in touch with you soon.';
                     document.getElementById('successState').style.display = 'block';
                 } else {
-                    alert('There was an error submitting your responses. Please try again.');
+                    const errorMsg = result.detail || result.message || 'There was an error submitting your responses.';
+                    alert('Error: ' + errorMsg + '\n\nPlease try again or contact us at info@tdoh.io');
+                    console.error('API Error:', result);
                     nextBtn.disabled = false;
                     nextBtn.textContent = 'Submit';
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('There was an error submitting your responses. Please try again.');
+                console.error('Network Error:', error);
+                alert('Network error: Unable to connect to the server.\n\nPlease check your internet connection or try again later.\n\nContact us at info@tdoh.io');
                 nextBtn.disabled = false;
                 nextBtn.textContent = 'Submit';
             }

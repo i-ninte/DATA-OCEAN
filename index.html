@@ -1651,6 +1651,11 @@
         async function handleSubmit(event) {
             event.preventDefault();
 
+            const submitButton = event.target.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
             const formData = {
                 first_name: document.getElementById('firstName').value,
                 last_name: document.getElementById('lastName').value,
@@ -1677,11 +1682,16 @@
                     event.target.reset();
                     document.querySelector('.request-btn').classList.add('active');
                 } else {
-                    alert('There was an error submitting your request. Please try again.');
+                    const errorMsg = result.detail || result.message || 'There was an error submitting your request.';
+                    alert('Error: ' + errorMsg + '\n\nPlease try again or contact us directly at info@tdoh.io');
+                    console.error('API Error:', result);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('There was an error submitting your request. Please try again.');
+                console.error('Network Error:', error);
+                alert('Network error: Unable to connect to the server.\n\nPlease check your internet connection or try again later.\n\nYou can also contact us directly at info@tdoh.io');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
             }
         }
 
@@ -1936,6 +1946,11 @@
         async function handleScheduleMeeting(event) {
             event.preventDefault();
 
+            const submitButton = event.target.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Scheduling...';
+
             const formData = {
                 name: document.getElementById('scheduleName').value,
                 email: document.getElementById('scheduleEmail').value,
@@ -1961,11 +1976,16 @@
                     event.target.reset();
                     closeScheduleMeetingModal();
                 } else {
-                    alert('There was an error scheduling your meeting. Please try again.');
+                    const errorMsg = result.detail || result.message || 'There was an error scheduling your meeting.';
+                    alert('Error: ' + errorMsg + '\n\nPlease try again or contact us directly at info@tdoh.io');
+                    console.error('API Error:', result);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('There was an error scheduling your meeting. Please try again.');
+                console.error('Network Error:', error);
+                alert('Network error: Unable to connect to the server.\n\nPlease check your internet connection or try again later.\n\nYou can also contact us directly at info@tdoh.io');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
             }
         }
 
